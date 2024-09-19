@@ -107,13 +107,18 @@ const TicketGroupStatus = ({
               </h4>
             </CustomLabel>
             <div style={{ marginLeft: "auto" }}>
-              <CustomAddButton
-                groupId={status}
-                users={data.users}
-                status={statusValues}
-                priority={priorityLabels}
-              />
-              <CustomMoreButton />
+              {/* Conditionally render Add and More buttons only if the status is not 'Canceled' */}
+              {status !== "Canceled" && (
+                <>
+                  <CustomAddButton
+                    groupId={status}
+                    users={data.users}
+                    status={statusValues}
+                    priority={priorityLabels}
+                  />
+                  <CustomMoreButton />
+                </>
+              )}
             </div>
           </div>
           <ul style={{ listStyleType: "none", padding: 0 }}>

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Modal, TextField, Select, MenuItem, Box } from "@mui/material";
 
 const AdditionForm = ({ open, onClose, users, status, priority }) => {
   const [formData, setFormData] = useState({
@@ -19,98 +18,121 @@ const AdditionForm = ({ open, onClose, users, status, priority }) => {
     }));
   };
 
+  if (!open) return null; // Don't render if not open
+
   return (
-    <Modal open={open} onClose={onClose}>
-      <Box
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          backgroundColor: "#ffffff",
-          padding: "1rem",
-          boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.2)",
-          borderRadius: "0.5rem",
-          maxWidth: "400px",
-        }}
-      >
-        <TextField
-          label="ID"
+    <div className="modal">
+      <div className="modal-content">
+        <input
+          className="text-field"
           name="id"
           value={formData.id}
           onChange={handleInputChange}
           disabled
-          fullWidth
-          size="small"
-          style={{ marginBottom: "1rem" }}
         />
-        <TextField
-          label="Title"
+        <textarea
+          className="text-field"
           name="title"
           value={formData.title}
           onChange={handleInputChange}
-          multiline
           rows={4}
-          fullWidth
-          size="small"
-          style={{ marginBottom: "1rem" }}
         />
-        <TextField
-          label="Tag"
+        <input
+          className="text-field"
           name="tag"
           value={formData.tag.join(", ")}
           disabled
-          fullWidth
-          size="small"
-          style={{ marginBottom: "1rem" }}
         />
-        <Select
-          label="User ID"
+        <select
+          className="select-field"
           name="userId"
           value={formData.userId}
           onChange={handleInputChange}
-          fullWidth
-          size="small"
-          style={{ marginBottom: "1rem" }}
         >
           {users?.map((user) => (
-            <MenuItem key={user.id} value={user.id}>
+            <option key={user.id} value={user.id}>
               {user.name}
-            </MenuItem>
+            </option>
           ))}
-        </Select>
-        <Select
-          label="Status"
+        </select>
+        <select
+          className="select-field"
           name="status"
           value={formData.status}
           onChange={handleInputChange}
-          fullWidth
-          size="small"
-          style={{ marginBottom: "1rem" }}
         >
           {status?.map((status) => (
-            <MenuItem key={status} value={status}>
+            <option key={status} value={status}>
               {status}
-            </MenuItem>
+            </option>
           ))}
-        </Select>
-        <Select
-          label="Priority"
+        </select>
+        <select
+          className="select-field"
           name="priority"
           value={formData.priority}
           onChange={handleInputChange}
-          fullWidth
-          size="small"
-          style={{ marginBottom: "1rem" }}
         >
           {Object.keys(priority).map((p) => (
-            <MenuItem key={p} value={p}>
+            <option key={p} value={p}>
               {priority[p]}
-            </MenuItem>
+            </option>
           ))}
-        </Select>
-      </Box>
-    </Modal>
+        </select>
+        <button className="close-button" onClick={onClose}>Close</button>
+      </div>
+
+      <style jsx>{`
+        .modal {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: rgba(0, 0, 0, 0.5);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 1000;
+        }
+
+        .modal-content {
+          background-color: #ffffff;
+          padding: 1rem;
+          border-radius: 0.5rem;
+          box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+          max-width: 400px;
+          width: 100%;
+        }
+
+        .text-field,
+        .select-field {
+          width: 100%;
+          margin-bottom: 1rem;
+          padding: 0.5rem;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          font-size: 14px;
+        }
+
+        .text-field:disabled {
+          background-color: #f0f0f0;
+        }
+
+        .close-button {
+          background-color: #007bff;
+          color: white;
+          border: none;
+          padding: 0.5rem 1rem;
+          border-radius: 4px;
+          cursor: pointer;
+        }
+
+        .close-button:hover {
+          background-color: #0056b3;
+        }
+      `}</style>
+    </div>
   );
 };
 

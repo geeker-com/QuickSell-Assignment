@@ -1,6 +1,4 @@
 import React from "react";
-import IconButton from "@mui/material/IconButton";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 const CustomMoreButton = () => {
   const handleIconClick = () => {
@@ -8,9 +6,24 @@ const CustomMoreButton = () => {
   };
 
   return (
-    <IconButton onClick={handleIconClick}>
-      <MoreHorizIcon style={{ fontSize: 18 }} />
-    </IconButton>
+    <button className="more-button" onClick={handleIconClick}>
+      ...
+      <style jsx>{`
+        .more-button {
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-size: 18px; /* Adjust size as needed */
+          color: rgba(0, 0, 0, 0.54); /* Change color as needed */
+          padding: 0;
+          margin: 0;
+        }
+
+        .more-button:hover {
+          color: rgba(0, 0, 0, 0.87); /* Change color on hover */
+        }
+      `}</style>
+    </button>
   );
 };
 

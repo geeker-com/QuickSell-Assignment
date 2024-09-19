@@ -1,13 +1,4 @@
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Grid,
-  styled,
-  Paper,
-  Backdrop,
-  CircularProgress,
-  Tooltip,
-} from "@mui/material";
 import { useAppState } from "../AppStateContext";
 import axios from "axios";
 
@@ -15,17 +6,24 @@ import TicketGroupPriority from "./TicketGroupPriority";
 import TicketGroupStatus from "./TicketGroupStatus";
 import TicketGroupUser from "./TicketGroupUser";
 
-import inProgressIcon from "../assets/In progress.png";
-import backlogIcon from "../assets/back.png";
-import cancelIcon from "../assets/cancel-button.png";
-import doneIcon from "../assets/PngItem_5284486.png";
-import todoIcon from "../assets/pngwing.com.png";
+import inProgressIcon from "../assets/in-progress.svg";
+import backlogIcon from "../assets/Backlog.svg";
+import cancelIcon from "../assets/Cancelled.svg";
+import doneIcon from "../assets/Done.svg";
+import todoIcon from "../assets/To-do.svg";
 
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import SdCardAlertIcon from '@mui/icons-material/SdCardAlert';
-import SignalCellularAltIcon from '@mui/icons-material/SignalCellularAlt';
-import SignalCellularAlt2BarIcon from '@mui/icons-material/SignalCellularAlt2Bar';
-import SignalCellularAlt1BarIcon from '@mui/icons-material/SignalCellularAlt1Bar';
+// import { ReactComponent as MoreHorizIcon } from "@mui/icons-material/MoreHoriz";
+// import { ReactComponent as SdCardAlertIcon } from '@mui/icons-material/SdCardAlert';
+// import { ReactComponent as SignalCellularAltIcon} from '@mui/icons-material/SignalCellularAlt';
+// import { ReactComponent as SignalCellularAlt2BarIcon} from '@mui/icons-material/SignalCellularAlt2Bar';
+// import { ReactComponent as SignalCellularAlt1BarIcon } from '@mui/icons-material/SignalCellularAlt1Bar';
+
+import { ReactComponent as MoreHorizIcon } from "../assets/No-priority.svg";
+import { ReactComponent as SdCardAlertIcon } from "../assets/SVG - Urgent Priority colour.svg";
+import { ReactComponent as SignalCellularAltIcon} from "../assets/Img - High Priority.svg";
+import { ReactComponent as SignalCellularAlt2BarIcon} from "../assets/Img - Medium Priority.svg";
+import { ReactComponent as SignalCellularAlt1BarIcon } from "../assets/Img - Low Priority.svg";
+
 const statusIcons = {
   Backlog: backlogIcon,
   Todo: todoIcon,
@@ -44,49 +42,29 @@ const priorityLabels = {
 
 const priorityIcons = {
   4: (
-    <Tooltip title={priorityLabels[4]} followCursor>
-      <Paper style={{ marginRight: "0.3rem", display: "inline-block" }}>
       <SdCardAlertIcon
           style={{ fontSize: "14px", padding: "0.3rem 0.3rem 0.1rem 0.3rem",color:"red" }}
         />
-      </Paper>
-    </Tooltip>
   ),
   3: (
-    <Tooltip title={priorityLabels[3]} followCursor>
-      <Paper style={{ marginRight: "0.3rem", display: "inline-block" }}>
       <SignalCellularAltIcon
           style={{ fontSize: "14px", padding: "0.3rem 0.3rem 0.1rem 0.3rem" }}
         />
-      </Paper>
-    </Tooltip>
   ),
   2: (
-    <Tooltip title={priorityLabels[2]} followCursor>
-      <Paper style={{ marginRight: "0.3rem", display: "inline-block" }}>
       <SignalCellularAlt2BarIcon
           style={{ fontSize: "14px", padding: "0.3rem 0.3rem 0.1rem 0.3rem" }}
         />
-      </Paper>
-    </Tooltip>
   ),
   1: (
-    <Tooltip title={priorityLabels[1]} followCursor>
-      <Paper style={{ marginRight: "0.3rem", display: "inline-block" }}>
       <SignalCellularAlt1BarIcon
           style={{ fontSize: "14px", padding: "0.3rem 0.3rem 0.1rem 0.3rem" }}
         />
-      </Paper>
-    </Tooltip>
   ),
   0: (
-    <Tooltip title={priorityLabels[0]} followCursor>
-      <Paper style={{ marginRight: "0.3rem", display: "inline-block" }}>
         <MoreHorizIcon
           style={{ fontSize: "14px", padding: "0.3rem 0.3rem 0.1rem 0.3rem" }}
         />
-      </Paper>
-    </Tooltip>
   ),
 };
 
@@ -94,9 +72,19 @@ const priorityValues = [4, 3, 2, 1, 0];
 
 const statusValues = ["Backlog", "Todo", "In progress", "Done", "Canceled"];
 
-const MainContainer = styled(Grid)({
-  /* ... */
-});
+
+const mainContainerStyle = {
+  display: "grid",
+  gridTemplateColumns: "repeat(5, 1fr)",
+  gap: "16px",
+  // Add other necessary styles
+};
+
+const MainContainer = ({ children }) => {
+  return <div style={mainContainerStyle}>{children}</div>;
+};
+
+
 
 const Home = () => {
   const { selectedOptions } = useAppState();
@@ -185,22 +173,18 @@ const Home = () => {
     }
   }
   //
+  const boxStyle = {
+    backgroundColor: "#f4f5f9",  // Background color
+    minHeight: "100vh",          // Minimum height
+    padding: "1rem",             // Padding
+  };
 
   return (
-    <Box
-      style={{
-        backgroundColor: "#f5f5f5",
-        minHeight: "100vh",
-        padding: "1rem",
-      }}
+    <div
+      style={boxStyle}
     >
       <MainContainer container>
-        <Backdrop
-          open={!isDataLoaded}
-          sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        >
-          <CircularProgress color="inherit" />
-        </Backdrop>
+
         {selectedOptions.grouping === "status" ? (
           <TicketGroupStatus
             data={data}
@@ -236,7 +220,7 @@ const Home = () => {
           />
         ) : null}
       </MainContainer>
-    </Box>
+    </div>
   );
 };
 
